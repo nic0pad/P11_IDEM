@@ -67,10 +67,15 @@ public class OrderServiceTest {
     insert orderItems;
 
     Order newOrder = [SELECT Id, Status FROM Order WHERE Id = :oldOrder.Id];
+
+    Boolean canSaved = OrderService.canSaved(newOrder, oldOrder);
+    System.assertEquals(true, canSaved);
+
+    newOrder = [SELECT Id, Status FROM Order WHERE Id = :oldOrder.Id];
     newOrder.Status = 'Activated';
     update newOrder;
 
-    Boolean canSaved = OrderService.canSaved(newOrder, oldOrder);
+    canSaved = OrderService.canSaved(newOrder, oldOrder);
     System.assertEquals(true, canSaved);
   }
 
