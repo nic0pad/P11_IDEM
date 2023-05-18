@@ -99,7 +99,7 @@ public class AccountServiceTest {
     List<Task> tasks = [SELECT Id FROM Task];
     System.assertEquals(3, tasks.size());
 
-    accounts = [SELECT Id, OwnerId, (SELECT Id, Subject, OwnerId, Priority, Status  FROM Tasks WHERE TaskSubtype = 'Call') FROM Account];
+    accounts = [SELECT Id, OwnerId, (SELECT Id, Subject, OwnerId, Priority, Status, IsReminderSet, ReminderDateTime  FROM Tasks WHERE TaskSubtype = 'Call') FROM Account];
     for(Account account : accounts) {
       System.assertEquals(1, account.Tasks.size());
       Task task = account.Tasks[0];
@@ -107,6 +107,8 @@ public class AccountServiceTest {
       System.assertEquals(account.OwnerId, task.OwnerId);
       System.assertEquals('Normal', task.Priority);
       System.assertEquals('Not Started', task.Status);
+      System.assertEquals(true, task.IsReminderSet);
+      System.assertEquals(Date.today().addDays(5), task.ReminderDateTime);
     }
   }
 }

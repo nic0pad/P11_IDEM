@@ -83,7 +83,8 @@ public with sharing class AccountService {
         Status = 'Not Started',
         Priority = 'Normal',
         TaskSubtype = 'Call',
-        ActivityDate = Date.today().addDays(5)
+        IsReminderSet = true,
+        ReminderDateTime = Date.today().addDays(5)
       ));
     }
 
